@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.cbsd.opengl.R
 import com.cbsd.opengl.render.ImageRender
 import com.cbsd.opengl.utils.LogUtils
+import com.cbsd.opengl.utils.ScreenUtils
 
 class ImageActivity : AppCompatActivity(), View.OnTouchListener {
 
@@ -76,7 +77,7 @@ class ImageActivity : AppCompatActivity(), View.OnTouchListener {
 
         glSurfaceView!!.post {
             mWidth = glSurfaceView!!.width
-            mHeight = glSurfaceView!!.height
+            mHeight = glSurfaceView!!.height + ScreenUtils.getStatusBarHeight(this)
             LogUtils.d("宽高：${glSurfaceView!!.width}, ${glSurfaceView!!.height}")
 
             leftTopXPoint = ((mWidth - imageTopWidth) / 2).toFloat()
