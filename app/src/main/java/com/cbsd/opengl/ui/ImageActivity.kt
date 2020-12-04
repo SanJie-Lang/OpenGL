@@ -143,180 +143,31 @@ class ImageActivity : AppCompatActivity(), View.OnTouchListener {
                 val diffY = endY - startY //移动的Y
                 when (clickType) {
                     1 -> {
-                        //左上角
-                        if (endX > leftTopXPoint) {
-                            //向右移动缩小
-                            val moveX = endX - leftTopXPoint
-                            val proportion = moveX / (imageTopWidth / 2)
-                            if (leftTopX < 0F) {//-0.5F
-                                leftTopX -= -0.5F * proportion
-                                leftTopXPoint += moveX
-                                imageTopWidth = ((1 - proportion) * imageTopWidth).toInt()
-                            }
-                        } else {
-                            //向左移动增大
-                            val moveX = leftTopXPoint - endX
-                            val proportion = moveX / leftTopXPoint
-                            if (leftTopX > -1F) {
-                                leftTopX += -0.5F * proportion
-                                leftTopXPoint -= moveX
-                                imageTopWidth = ((1 + proportion) * imageTopWidth).toInt()
-                            }
-                        }
-
-                        if (endY > leftTopYPoint) { //最低-0.5F
-                            //向下 缩小
-                            val moveY = endY - leftTopYPoint
-                            val proportion = moveY / (mHeight - leftTopYPoint)
-                            if (leftTopY > -0.5F) {//0.5F
-                                leftTopY -= 0.5F * proportion
-                                leftTopYPoint += moveY * proportion
-                                imageLeftHeight = ((1 - proportion) * imageLeftHeight).toInt()
-                            }
-                        } else {
-//                            //向上 增大
-                            val moveY = leftTopYPoint - endY
-                            val proportion = moveY / leftTopYPoint
-                            if (leftTopY < 2F) {
-                                leftTopY += 0.5F * proportion
-                                leftTopYPoint -= moveY * proportion
-                                imageLeftHeight = ((1 + proportion) * imageLeftHeight).toInt()
-                            }
-                        }
+                        leftTopX = (endX * 2) / mWidth - 1
+                        leftTopY = 2 - 4 * endY / mHeight
+                        leftTopXPoint = endX
+                        leftTopYPoint = endY
                     }
                     2 -> {
                         //右上角
-                        if (endX > rightTopXPoint) {
-                            //最后的点X大于上一次点X 增大
-                            val moveX = endX - rightTopXPoint
-                            val proportion = moveX / (mWidth - rightTopXPoint)
-                            LogUtils.d("向右移动的比例$proportion")
-                            if (rightTopX < 1F) {
-                                rightTopX += 0.5F * proportion
-                                rightTopXPoint += moveX
-
-                                imageTopWidth = ((1 + proportion) * imageTopWidth).toInt()
-                            }
-                        } else {
-                            //向左
-                            val moveX = rightTopXPoint - endX
-                            val proportion = moveX / (imageTopWidth / 2)
-                            LogUtils.d("向左移动的比例$proportion")
-                            if (rightTopX > 0F) {
-                                rightTopX -= 0.5F * proportion
-                                rightTopXPoint -= moveX
-
-                                imageTopWidth = ((1 - proportion) * imageTopWidth).toInt()
-                            }
-                        }
-
-                        if (endY > rightTopYPoint) { //最低-0.5F
-                            //向下 缩小
-                            val moveY = endY - rightTopYPoint
-                            val proportion = moveY / (mHeight - rightTopYPoint)
-                            if (rightTopY > -0.5F) {//0.5F
-                                rightTopY -= 0.5F * proportion
-                                rightTopYPoint += moveY * proportion
-                                imageRightHeight = ((1 - proportion) * imageRightHeight).toInt()
-                            }
-                        } else {
-//                            //向上 增大
-                            val moveY = rightTopYPoint - endY
-                            val proportion = moveY / rightTopYPoint
-                            if (rightTopY < 2F) {
-                                rightTopY += 0.5F * proportion
-                                rightTopYPoint -= moveY * proportion
-                                imageRightHeight = ((1 + proportion) * imageRightHeight).toInt()
-                            }
-                        }
+                        rightTopX = (endX * 2) / mWidth - 1
+                        rightTopY = 2 - 4 * endY / mHeight
+                        rightTopXPoint = endX
+                        rightTopYPoint = endY
                     }
                     3 -> {
                         //左下角
-                        if (endX > leftBottomXPoint) {
-                            //向右移动缩小
-                            val moveX = endX - leftBottomXPoint
-                            val proportion = moveX / (imageBottomWidth / 2)
-                            if (leftBottomX < 0F) {//-0.5F
-                                leftBottomX -= -0.5F * proportion
-                                leftBottomXPoint += moveX
-                                imageBottomWidth = ((1 - proportion) * imageBottomWidth).toInt()
-                            }
-                        } else {
-                            //向左移动增大
-                            val moveX = leftBottomXPoint - endX
-                            val proportion = moveX / leftBottomXPoint
-                            if (leftBottomX > -1F) {
-                                leftBottomX += -0.5F * proportion
-                                leftBottomXPoint -= moveX
-                                imageBottomWidth = ((1 + proportion) * imageBottomWidth).toInt()
-                            }
-                        }
-
-                        if (endY > leftBottomYPoint) {
-                            //向下 增大
-                            val moveY = endY - leftBottomYPoint
-                            val proportion = moveY / (mHeight - leftBottomYPoint)
-                            if (leftBottomY > -2F) { //-0.5F
-                                leftBottomY += -0.5F * proportion
-                                leftBottomYPoint += moveY
-                                imageLeftHeight = ((1 + proportion) * imageLeftHeight).toInt()
-                            }
-                        } else {
-                            //向上 缩小
-                            val moveY = leftBottomYPoint - endY
-                            val proportion = moveY / leftBottomYPoint
-                            if (leftBottomY < 0.5F) {
-                                leftBottomY -= -0.5F * proportion
-                                leftBottomYPoint -= moveY
-                                imageLeftHeight = ((1 - proportion) * imageLeftHeight).toInt()
-                            }
-                        }
+                        leftBottomX = (endX * 2) / mWidth - 1
+                        leftBottomY = 2 - 4 * endY / mHeight
+                        leftBottomXPoint = endX
+                        leftBottomYPoint = endY
                     }
                     4 -> {
                         //右下角
-                        if (endX > rightBottomXPoint) {
-                            //最后的点X大于上一次点X 增大
-                            val moveX = endX - rightBottomXPoint
-                            val proportion = moveX / (mWidth - rightBottomXPoint)
-                            LogUtils.d("向右移动的比例$proportion")
-                            if (rightBottomX < 1F) {
-                                rightBottomX += 0.5F * proportion
-                                rightBottomXPoint += moveX
-
-                                imageBottomWidth = ((1 + proportion) * imageBottomWidth).toInt()
-                            }
-                        } else {
-                            //向左
-                            val moveX = rightBottomXPoint - endX
-                            val proportion = moveX / (imageBottomWidth / 2)
-                            LogUtils.d("向左移动的比例$proportion")
-                            if (rightBottomX > 0F) {
-                                rightBottomX -= 0.5F * proportion
-                                rightBottomXPoint -= moveX
-
-                                imageBottomWidth = ((1 - proportion) * imageBottomWidth).toInt()
-                            }
-                        }
-
-                        if (endY > rightBottomYPoint) {
-                            //向下 增大
-                            val moveY = endY - rightBottomYPoint
-                            val proportion = moveY / (mHeight - rightBottomYPoint)
-                            if (rightBottomY > -2F) { //-0.5F
-                                rightBottomY += -0.5F * proportion
-                                rightBottomYPoint += moveY
-                                imageRightHeight = ((1 + proportion) * imageRightHeight).toInt()
-                            }
-                        } else {
-                            //向上 缩小
-                            val moveY = rightBottomYPoint - endY
-                            val proportion = moveY / rightBottomYPoint
-                            if (rightBottomY < 0.5F) {
-                                rightBottomY -= -0.5F * proportion
-                                rightBottomYPoint -= moveY
-                                imageRightHeight = ((1 - proportion) * imageRightHeight).toInt()
-                            }
-                        }
+                        rightBottomX = (endX * 2) / mWidth - 1
+                        rightBottomY = 2 - 4 * endY / mHeight
+                        rightBottomXPoint = endX
+                        rightBottomYPoint = endY
                     }
                 }
 
