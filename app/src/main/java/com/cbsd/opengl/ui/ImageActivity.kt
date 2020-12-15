@@ -11,6 +11,7 @@ import com.cbsd.opengl.R
 import com.cbsd.opengl.render.ImageRender
 import com.cbsd.opengl.utils.LogUtils
 import com.cbsd.opengl.utils.ScreenUtils
+import kotlin.math.pow
 
 class ImageActivity : AppCompatActivity(), View.OnTouchListener {
 
@@ -64,7 +65,6 @@ class ImageActivity : AppCompatActivity(), View.OnTouchListener {
         glSurfaceView!!.renderMode = GLSurfaceView.RENDERMODE_WHEN_DIRTY
 
         glSurfaceView!!.setOnTouchListener(this)
-
 
         val options = BitmapFactory.Options()
         BitmapFactory.decodeResource(resources, R.mipmap.icon_temp_avatar, options)
@@ -139,8 +139,6 @@ class ImageActivity : AppCompatActivity(), View.OnTouchListener {
                 //判断移动的比例
                 endX = event.x
                 endY = event.y
-                val diffX = endX - startX //移动的X
-                val diffY = endY - startY //移动的Y
                 when (clickType) {
                     1 -> {
                         leftTopX = (endX * 2) / mWidth - 1
@@ -218,6 +216,11 @@ class ImageActivity : AppCompatActivity(), View.OnTouchListener {
     ): Boolean {
         //dx：点的x轴  dy：点的y轴  ev_x：手势触摸到的x轴  ev_y：手势触摸到的y轴
         // 点的 x,y 轴 上下左右各增加100像素，扩大触摸范围，判断触摸手势是否在该范围内
-        return ev_x > dx - pointMargin && ev_x < dx + pointMargin && ev_y > dy - pointMargin && ev_y < dy + pointMargin
+        val distance = kotlin.math.sqrt(
+            (dx.toDouble() - ev_x).pow(2.0)
+                    + (dy.toDouble() - ev_y).pow(2.0)
+        ).toFloat()
+        LogUtils.d("距离:${distance}")
+        return  distance <= pointMargin
     }
 }
